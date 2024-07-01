@@ -1,5 +1,5 @@
-Udemy Course : Laravel Ecommerce Website with Vue.js Admin Panel
-Instructor : Zura Sekhniashvili
+# Udemy Course : Laravel Ecommerce Website with Vue.js Admin Panel
+# Instructor : Zura Sekhniashvili
 # Laravel E-commerce Website
 
 ## Installation 
