@@ -118,7 +118,7 @@
             store.dispatch('createProduct',product.value)
             .then(response=>{
                 loading.value = false
-                if (response.statue === 201) {
+                if (response.status === 201) {
                     store.dispatch('getProducts')
                     closeModal()
                 }
