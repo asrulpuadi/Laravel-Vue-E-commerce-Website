@@ -206,6 +206,7 @@
         store.dispatch('deleteProduct',product.id)
         .then(res=>{
             store.dispatch('getProducts')
+            // getProducts()
         })
     }
 </script>

@@ -12,7 +12,7 @@
                             <Spinner v-if="loading" class="absolute left-0 top-0 right-0 bottom-0 bg-white flex items-center justify-center"/>
                             <header class="py-3 px-4 flex justify-between items-center">
                                 <DialogTitle as="h3" class="text-lg leading-6 font-medium text-gray-900">
-                                    {{ product.id ? `Update product:"${props.product.id}"` : 'Create new Product' }}
+                                    {{ product.id ? `Update product:"${props.product.title}"` : 'Create new Product' }}
                                 </DialogTitle>
                                 <button @click="closeModal()" class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0,2)]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

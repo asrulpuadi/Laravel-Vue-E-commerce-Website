@@ -24,6 +24,9 @@ const routes = [
       {
         path: 'products',
         name: 'app.products',
+        query: {
+          search: '',
+        },
         component: Products
       }
     ]
