@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Http\Helpers\Cart;
 
 class RegisteredUserController extends Controller
 {
@@ -45,6 +46,8 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        Cart::moveCartItemsIntoDb();
 
         return redirect(RouteServiceProvider::HOME);
     }
