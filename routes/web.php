@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ProfileCustomController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,5 +44,21 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::middleware(['auth','verified'])->group(function(){
+    Route::get('/profile-information',[ProfileCustomController::class,'profile'])->name('profile-information.profile');
+    Route::post('/profile-information',[ProfileCustomController::class,'update'])->name('profile-information.update');
+    Route::post('/profile-information/password-update',[ProfileCustomController::class,'passwordUpdate'])->name('profile-information.password-update');
+
+    Route::post('/checkout',[CheckoutController::class,'checkout'])->name('checkout');
+    Route::post('/checkout/{order}',[CheckoutController::class,'checkoutOrder'])->name('checkout.order');
+    Route::get('/checkout/success',[CheckoutController::class,'success'])->name('checkout.success');
+    Route::get('/checkout/failure',[CheckoutController::class,'failure'])->name('checkout.failure');
+
+    Route::get('/order',[OrderController::class,'index'])->name('order.index');
+    Route::get('/order/view/{order}',[OrderController::class,'view'])->name('order.view');
+});
+
+Route::post('/webhook/stripe',[CheckoutController::class,'webhook']);
 
 require __DIR__.'/auth.php';

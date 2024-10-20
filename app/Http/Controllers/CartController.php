@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-
 use App\Http\Helpers\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
@@ -14,11 +12,7 @@ class CartController extends Controller
 {
     public function index()
     {
-        $cartItems = Cart::getCartItems();
-
-        $ids = Arr::pluck($cartItems,'product_id');
-        $products = Product::query()->whereIn('id',$ids)->get();
-        $cartItems = Arr::keyBy($cartItems,'product_id');
+        list($products,$cartItems) = Cart::getProductsAndCartItems();
         $total = 0;
 
         foreach ($products as $product) {
@@ -159,5 +153,4 @@ class CartController extends Controller
             ]);
         }
     }
-
 }
