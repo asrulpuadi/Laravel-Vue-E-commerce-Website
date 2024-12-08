@@ -6,5 +6,18 @@ enum OrderStatus : string
 {
     case Unpaid = 'unpaid';
     case Paid = 'paid';
-    case Completed = 'complete';
+    case Shipped = 'shipped';
+    case Completed = 'completed';
+    case Cancelled = 'cancelled';
+
+    public static function getStatuses()
+    {
+        return [
+            self::Unpaid,
+            self::Paid,
+            self::Cancelled,
+            self::Shipped,
+            self::Completed
+        ];
+    }
 }

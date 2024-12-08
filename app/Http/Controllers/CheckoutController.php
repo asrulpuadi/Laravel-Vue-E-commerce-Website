@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Support\Facades\Mail;
 
 use App\Http\Helpers\Cart;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
+use App\Mail\NewOrderEmail;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\CartItem;
 use App\Models\OrderItem;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Models\User;
 
 class CheckoutController extends Controller
 {
@@ -20,9 +23,9 @@ class CheckoutController extends Controller
     private $paymentStatusPaid;
     private $paymentStatusFailed;
 
-    private $rderStatusUnpaid;
-    private $rderStatusPaid;
-    private $rderStatusCompleted;
+    private $orderStatusUnpaid;
+    private $orderStatusPaid;
+    private $orderStatusCompleted;
 
     public function  __construct()
     {
@@ -32,9 +35,9 @@ class CheckoutController extends Controller
         $this->paymentStatusPaid = PaymentStatus::Paid;
         $this->paymentStatusFailed = PaymentStatus::Failed;
 
-        $this->rderStatusUnpaid = OrderStatus::Unpaid;
-        $this->rderStatusPaid = OrderStatus::Paid;
-        $this->rderStatusCompleted = OrderStatus::Completed;
+        $this->orderStatusUnpaid = OrderStatus::Unpaid;
+        $this->orderStatusPaid = OrderStatus::Paid;
+        $this->orderStatusCompleted = OrderStatus::Completed;
     }
 
     public function checkout(Request $request)
@@ -271,12 +274,18 @@ class CheckoutController extends Controller
     private function updateOrderAndSession(Payment $payment)
     {
         /* update status payment */
-        $payment->status = PaymentStatus::Paid;
+        $payment->status = $this->paymentStatusPaid->value;
         $payment->update();
 
         /* update status order */
         $order = $payment->order;
-        $order->status = OrderStatus::Paid;
+        $order->status = $this->orderStatusPaid->value;
         $order->update();
+
+        $adminUsers = User::where('is_admin',1)->get();
+
+        foreach ([...$adminUsers,$order->user] as $user) {
+            Mail::to($user)->send(new NewOrderEmail($order,(bool)$user->is_admin));
+        }
     }
 }
