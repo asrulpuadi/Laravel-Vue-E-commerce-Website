@@ -45,7 +45,7 @@ function updateSidebarState() {
 }
 
 onMounted(() => {
-  store.dispatch('getUser')
+  store.dispatch('getCurrentUser')
   updateSidebarState();
   window.addEventListener('resize', updateSidebarState)
 })

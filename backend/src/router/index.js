@@ -8,6 +8,7 @@ import OrderView from "../views/Orders/OrderView.vue";
 import RequestPassword from "../views/RequestPassword.vue";
 import ResetPassword from "../views/ResetPassword.vue";
 import store from "../store";
+import Users from "../views/Users/Users.vue"
 
 const routes = [
   {
@@ -46,6 +47,14 @@ const routes = [
           search: '',
         },
         component:OrderView
+      },
+      {
+        path: 'users',
+        name: 'app.users',
+        query: {
+          search: '',
+        },
+        component: Users
       },
     ]
   },

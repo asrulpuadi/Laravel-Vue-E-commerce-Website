@@ -27,6 +27,21 @@ export  function setProducts(state,[loading,response=null]){
     state.products.loading = loading
 }
 
+export  function setUsers(state,[loading,response=null]){
+    if (response) {
+        state.users = {
+            data : response.data,
+            links : response.meta.links,
+            total : response.meta.total,
+            limit : response.meta.per_page,
+            from : response.meta.from,
+            to : response.meta.to,
+            page : response.meta.current_page
+        }
+    }
+    state.users.loading = loading
+}
+
 export  function setOrders(state,[loading,data=null]){
     if (data) {
         state.orders = {
